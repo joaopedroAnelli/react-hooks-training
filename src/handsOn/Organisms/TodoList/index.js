@@ -1,17 +1,9 @@
-import React, {
-  useImperativeHandle,
-  useRef,
-  useState,
-  forwardRef,
-} from 'react';
+import React, { useRef, useState } from 'react';
 import { Form } from '@unform/web';
 import Activity from '../../Molecules/Activity';
 import Input from '../../Atoms/Input';
 
-function TodoList(
-  { activities = [], onAdd = () => {}, onCheck = () => {} },
-  ref
-) {
+function TodoList({ activities = [], onAdd = () => {}, onCheck = () => {} }) {
   console.log('renderizou a lista', activities);
   const formRef = useRef();
   const [sortBy, setSortBy] = useState('byId');
@@ -37,14 +29,12 @@ function TodoList(
     byId: sortById,
   };
 
-  useImperativeHandle(ref, () => ({
-    changeSort: () => {
-      const sortTypes = Object.keys(sortModes);
-      const actualSortType = sortTypes.indexOf(sortBy);
-      const newSortMode = sortTypes[(actualSortType + 1) % sortTypes.length];
-      setSortBy(newSortMode);
-    },
-  }));
+  const changeSort = () => {
+    const sortTypes = Object.keys(sortModes);
+    const actualSortType = sortTypes.indexOf(sortBy);
+    const newSortMode = sortTypes[(actualSortType + 1) % sortTypes.length];
+    setSortBy(newSortMode);
+  };
 
   const orderedList = activities.sort(sortModes[sortBy]);
 
@@ -93,4 +83,5 @@ function TodoList(
   );
 }
 
-export default forwardRef(TodoList);
+// export default forwardRef(TodoList);
+export default TodoList;

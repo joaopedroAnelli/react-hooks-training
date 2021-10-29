@@ -1,62 +1,42 @@
 import './style.css';
-import React, { useState, useEffect, useMemo, useRef } from 'react';
 import TodoList from '../../Organisms/TodoList';
 export default function HandsOn() {
   console.log('renderizou');
-  const [name, setName] = useState('Coisas a fazer hoje');
-  const [userName, setUsername] = useState('John');
-  const [userSurname, setUserSurname] = useState('Mayer');
-  const [activities, setActivities] = useState([]);
-  const todoListRef = useRef();
-  const nameInputRef = useRef();
+  let name = 'Coisas a fazer hoje';
+  let userName = 'John';
+  let userSurname = 'Mayer';
+  let activities = [];
 
-  useEffect(() => {
-    document.title = `Você tem ${activities.length} ${
-      activities.length > 1 ? 'atividades' : 'atividade'
-    } na lista`;
-  });
-  const fullName = useMemo(() => {
-    console.log('calculou nome');
-    return `Mr. ${userName} ${userSurname}`;
-  }, [userName, userSurname]);
+  const fullName = `Mr. ${userName} ${userSurname}`;
 
   const addActivity = (activity) => {
-    setActivities([...activities, activity]);
+    activities.push(activity);
   };
 
   const check = (activity) => {
-    const newActivities = [...activities];
-    const activityToUpdateIndex = newActivities.findIndex(
+    const activityToUpdateIndex = activities.findIndex(
       (a) => a.id === activity.id
     );
-    newActivities[activityToUpdateIndex].checked = true;
-    setActivities(newActivities);
+    activities[activityToUpdateIndex].checked = true;
     setTimeout(clearList, 500);
   };
 
   const clearList = () => {
     const filteredActivities = activities.filter((a) => !a.checked);
-    setActivities([...filteredActivities]);
+    activities = filteredActivities;
   };
+
   return (
     <div className='is-flex'>
       <div>
         <div className='card mb-5'>
           <div className='card-header'>
             <h1 className='card-header-title'>{name}</h1>
-            <button
-              className='card-header-icon has-text-info'
-              onClick={() => {
-                nameInputRef.current.focus();
-              }}
-            >
-              Editar
-            </button>
+            <button className='card-header-icon has-text-info'>Editar</button>
           </div>
 
           <div className='card-content'>
             <TodoList
-              ref={todoListRef}
               activities={activities}
               onAdd={addActivity}
               onCheck={check}
@@ -66,12 +46,7 @@ export default function HandsOn() {
             <p className='is-size-7 is-italic card-footer-item'>
               by {fullName}
             </p>
-            <button
-              className='button is-info is-inverted card-footer-item'
-              onClick={() => {
-                todoListRef.current.changeSort();
-              }}
-            >
+            <button className='button is-info is-inverted card-footer-item'>
               Ordernar
             </button>
           </div>
@@ -85,13 +60,11 @@ export default function HandsOn() {
               <label className='label'>Nome da lista</label>
               <div className='control'>
                 <input
-                  id='name'
-                  ref={nameInputRef}
                   className='input'
                   placeholder='Edite o nome da lista'
                   value={name}
                   onChange={(e) => {
-                    setName(e.target.value);
+                    name = e.target.value;
                   }}
                 />
               </div>
@@ -104,7 +77,7 @@ export default function HandsOn() {
                   placeholder='Edite o nome do usuário'
                   value={userName}
                   onChange={(e) => {
-                    setUsername(e.target.value);
+                    userName = e.target.value;
                   }}
                 />
               </div>
@@ -117,7 +90,7 @@ export default function HandsOn() {
                   placeholder='Edite o sobrenome do usuário'
                   value={userSurname}
                   onChange={(e) => {
-                    setUserSurname(e.target.value);
+                    userSurname = e.target.value;
                   }}
                 />
               </div>
