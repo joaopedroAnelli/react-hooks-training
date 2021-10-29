@@ -10,8 +10,6 @@ export default function UseState() {
   const todoListRef = useRef();
   const nameInputRef = useRef();
 
-  console.log({ todoListRef });
-
   useEffect(() => {
     document.title = `Você tem ${activities.length} ${
       activities.length > 1 ? 'atividades' : 'atividade'
