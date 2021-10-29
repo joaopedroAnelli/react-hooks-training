@@ -1,7 +1,7 @@
 import './style.css';
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import TodoList from '../../Organisms/TodoList';
-export default function UseState() {
+export default function HandsOn() {
   console.log('renderizou');
   const [name, setName] = useState('Coisas a fazer hoje');
   const [userName, setUsername] = useState('John');
