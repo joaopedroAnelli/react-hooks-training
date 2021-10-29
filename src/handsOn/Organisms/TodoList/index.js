@@ -8,9 +8,6 @@ import { Form } from '@unform/web';
 import Activity from '../../Molecules/Activity';
 import Input from '../../Atoms/Input';
 
-const renderActivity = (activity, check) => {
-  return <Activity key={activity.id} data={activity} onCheck={check} />;
-};
 function TodoList(
   { activities = [], onAdd = () => {}, onCheck = () => {} },
   ref
@@ -53,7 +50,9 @@ function TodoList(
 
   let content = (
     <div>
-      {orderedList.map((activity) => renderActivity(activity, onCheck))}
+      {orderedList.map((activity) => (
+        <Activity key={activity.id} data={activity} onCheck={onCheck} />
+      ))}
     </div>
   );
   if (!orderedList.length) {
