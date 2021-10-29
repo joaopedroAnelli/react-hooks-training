@@ -49,19 +49,20 @@ function TodoList(
   const orderedList = activities.sort(sortModes[sortBy]);
 
   let content = (
-    <div>
-      {orderedList.map((activity) => (
-        <Activity key={activity.id} data={activity} onCheck={onCheck} />
-      ))}
-    </div>
+    <article className='message'>
+      <div className='message-body'>
+        <p>Nada a fazer...</p>
+      </div>
+    </article>
   );
-  if (!orderedList.length) {
+
+  if (orderedList.length) {
     content = (
-      <article className='message'>
-        <div className='message-body'>
-          <p>Nada a fazer...</p>
-        </div>
-      </article>
+      <div>
+        {orderedList.map((activity) => (
+          <Activity key={activity.id} data={activity} onCheck={onCheck} />
+        ))}
+      </div>
     );
   }
 
